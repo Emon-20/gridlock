@@ -1,0 +1,894 @@
+/* ========================================
+   GRIDLOCK — Styles
+   Deep color palette: Space, Crimson, Emerald, Purple
+   ======================================== */
+
+/* ===== VARIABLES ===== */
+:root {
+    --bg-primary: #0B0B1A;
+    --bg-secondary: #111128;
+    --bg-card: #1A1A38;
+    --bg-card-hover: #222250;
+
+    --p1: #FF4757;
+    --p1-glow: rgba(255, 71, 87, 0.35);
+    --p1-soft: rgba(255, 71, 87, 0.13);
+
+    --p2: #2ED8A3;
+    --p2-glow: rgba(46, 216, 163, 0.35);
+    --p2-soft: rgba(46, 216, 163, 0.13);
+
+    --accent: #6C5CE7;
+    --accent-glow: rgba(108, 92, 231, 0.35);
+    --accent-soft: rgba(108, 92, 231, 0.12);
+
+    --text: #FFFFFF;
+    --text-dim: #8080A8;
+    --text-muted: #4A4A70;
+
+    --line-idle: rgba(108, 92, 231, 0.18);
+
+    --dot-size: 18px;
+    --cell-size: 62px;
+    --line-thickness: 7px;
+
+    --radius: 14px;
+    --radius-sm: 10px;
+    --transition: 0.25s ease;
+    --font: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+}
+
+/* ===== RESET ===== */
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* ===== BODY ===== */
+body {
+    font-family: var(--font);
+    background: var(--bg-primary);
+    color: var(--text);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background-image:
+        radial-gradient(ellipse at 20% 50%, rgba(108, 92, 231, 0.06) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 20%, rgba(255, 71, 87, 0.04) 0%, transparent 50%),
+        radial-gradient(ellipse at 60% 80%, rgba(46, 216, 163, 0.04) 0%, transparent 50%);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* ===== CONTAINER ===== */
+.game-container {
+    width: 100%;
+    max-width: 520px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
+}
+
+/* ========================================
+   HEADER
+   ======================================== */
+.header {
+    text-align: center;
+}
+
+.logo {
+    font-size: 2.8rem;
+    font-weight: 900;
+    letter-spacing: 0.08em;
+    color: var(--text);
+    text-shadow: 0 0 30px var(--accent-glow);
+}
+
+.logo span {
+    color: var(--accent);
+}
+
+.tagline {
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.25em;
+    color: var(--text-dim);
+    margin-top: 4px;
+    font-weight: 600;
+}
+
+/* ========================================
+   MODE SELECTOR
+   ======================================== */
+.mode-selector {
+    display: flex;
+    gap: 6px;
+    background: var(--bg-secondary);
+    padding: 5px;
+    border-radius: var(--radius);
+    border: 1px solid rgba(108, 92, 231, 0.12);
+}
+
+.mode-btn {
+    padding: 10px 22px;
+    border: none;
+    background: transparent;
+    color: var(--text-dim);
+    font-family: var(--font);
+    font-size: 0.85rem;
+    font-weight: 600;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: all var(--transition);
+    white-space: nowrap;
+}
+
+.mode-btn:hover {
+    color: var(--text);
+    background: rgba(108, 92, 231, 0.1);
+}
+
+.mode-btn.active {
+    background: var(--accent);
+    color: var(--text);
+    box-shadow: 0 2px 14px var(--accent-glow);
+}
+
+/* ========================================
+   SCOREBOARD
+   ======================================== */
+.scoreboard {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    width: 100%;
+}
+
+.player-card {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 16px;
+    background: var(--bg-card);
+    border-radius: var(--radius);
+    border: 2px solid transparent;
+    transition: all var(--transition);
+}
+
+.player-card .player-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    transition: all var(--transition);
+}
+
+.player-1-card .player-dot {
+    background: var(--p1);
+}
+
+.player-2-card .player-dot {
+    background: var(--p2);
+}
+
+/* Active player glow */
+.player-card.active.player-1-card {
+    border-color: var(--p1);
+    box-shadow: 0 0 20px var(--p1-glow), inset 0 0 20px var(--p1-soft);
+}
+
+.player-card.active.player-2-card {
+    border-color: var(--p2);
+    box-shadow: 0 0 20px var(--p2-glow), inset 0 0 20px var(--p2-soft);
+}
+
+.player-card.active .player-dot {
+    animation: pulse-dot 1.5s ease-in-out infinite;
+}
+
+.player-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.player-label {
+    font-size: 0.72rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-dim);
+}
+
+.player-score {
+    font-size: 1.8rem;
+    font-weight: 800;
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+}
+
+.player-1-card .player-score {
+    color: var(--p1);
+}
+
+.player-2-card .player-score {
+    color: var(--p2);
+}
+
+.vs-badge {
+    font-size: 0.72rem;
+    font-weight: 800;
+    color: var(--text-muted);
+    letter-spacing: 0.1em;
+    flex-shrink: 0;
+}
+
+/* ========================================
+   TIMER
+   ======================================== */
+.timer-wrapper {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.timer-bar {
+    flex: 1;
+    height: 6px;
+    background: var(--bg-card);
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.timer-fill {
+    height: 100%;
+    width: 100%;
+    border-radius: 3px;
+    transition: width 0.1s linear;
+}
+
+.timer-fill.p1 {
+    background: var(--p1);
+}
+
+.timer-fill.p2 {
+    background: var(--p2);
+}
+
+.timer-fill.urgent {
+    animation: timer-pulse 0.5s ease-in-out infinite;
+}
+
+.timer-text {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--text-dim);
+    min-width: 30px;
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+}
+
+/* ========================================
+   TURN INDICATOR
+   ======================================== */
+.turn-indicator {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--text-dim);
+    transition: color var(--transition);
+    min-height: 24px;
+}
+
+.turn-indicator.p1 {
+    color: var(--p1);
+}
+
+.turn-indicator.p2 {
+    color: var(--p2);
+}
+
+.turn-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    display: inline-block;
+    flex-shrink: 0;
+}
+
+.turn-dot.p1 {
+    background: var(--p1);
+    box-shadow: 0 0 6px var(--p1-glow);
+}
+
+.turn-dot.p2 {
+    background: var(--p2);
+    box-shadow: 0 0 6px var(--p2-glow);
+}
+
+/* ========================================
+   GAME BOARD
+   ======================================== */
+.board-wrapper {
+    padding: 22px;
+    background: var(--bg-secondary);
+    border-radius: var(--radius);
+    border: 1px solid rgba(108, 92, 231, 0.1);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+}
+
+.board {
+    display: grid;
+    gap: 0;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+/* ===== DOTS ===== */
+.dot {
+    width: var(--dot-size);
+    height: var(--dot-size);
+    background: var(--accent);
+    border-radius: 50%;
+    z-index: 2;
+    box-shadow: 0 0 8px var(--accent-glow);
+    position: relative;
+}
+
+/* ===== LINES ===== */
+.line {
+    position: relative;
+    cursor: pointer;
+    z-index: 1;
+}
+
+.line::before {
+    content: '';
+    position: absolute;
+    border-radius: calc(var(--line-thickness) / 2);
+    background: var(--line-idle);
+    transition: all var(--transition);
+}
+
+/* Horizontal lines */
+.h-line::before {
+    left: -1px;
+    right: -1px;
+    top: 50%;
+    transform: translateY(-50%);
+    height: var(--line-thickness);
+}
+
+/* Vertical lines */
+.v-line::before {
+    top: -1px;
+    bottom: -1px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: var(--line-thickness);
+}
+
+/* Hover effect — player 1 */
+.board[data-current-player="1"] .line:not(.drawn):hover::before {
+    background: rgba(255, 71, 87, 0.45);
+    box-shadow: 0 0 12px var(--p1-glow);
+}
+
+/* Hover effect — player 2 */
+.board[data-current-player="2"] .line:not(.drawn):hover::before {
+    background: rgba(46, 216, 163, 0.45);
+    box-shadow: 0 0 12px var(--p2-glow);
+}
+
+/* Drawn lines */
+.line.drawn {
+    cursor: default;
+    pointer-events: none;
+}
+
+.line.drawn.p1::before {
+    background: var(--p1);
+    box-shadow: 0 0 10px var(--p1-glow);
+}
+
+.line.drawn.p2::before {
+    background: var(--p2);
+    box-shadow: 0 0 10px var(--p2-glow);
+}
+
+/* Line draw animation */
+.h-line.drawn::before {
+    animation: draw-h 0.2s ease-out;
+}
+
+.v-line.drawn::before {
+    animation: draw-v 0.2s ease-out;
+}
+
+/* ===== BOXES ===== */
+.box {
+    position: relative;
+    border-radius: 4px;
+    transition: background var(--transition);
+}
+
+.box.claimed {
+    animation: box-pop 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.box.claimed.p1 {
+    background: var(--p1-soft);
+}
+
+.box.claimed.p2 {
+    background: var(--p2-soft);
+}
+
+.box.claimed::after {
+    content: attr(data-label);
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.7rem;
+    font-weight: 800;
+    letter-spacing: 0.05em;
+    opacity: 0.55;
+}
+
+.box.claimed.p1::after {
+    color: var(--p1);
+}
+
+.box.claimed.p2::after {
+    color: var(--p2);
+}
+
+/* ========================================
+   CONTROLS
+   ======================================== */
+.controls {
+    display: flex;
+    gap: 12px;
+    width: 100%;
+}
+
+.btn {
+    flex: 1;
+    padding: 12px 20px;
+    border: 2px solid rgba(108, 92, 231, 0.18);
+    background: var(--bg-card);
+    color: var(--text);
+    font-family: var(--font);
+    font-size: 0.9rem;
+    font-weight: 700;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: all var(--transition);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+}
+
+.btn:hover:not(:disabled) {
+    background: var(--bg-card-hover);
+    border-color: var(--accent);
+    box-shadow: 0 0 15px var(--accent-soft);
+    transform: translateY(-1px);
+}
+
+.btn:active:not(:disabled) {
+    transform: scale(0.97) translateY(0);
+}
+
+.btn:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+
+.undo-btn:hover:not(:disabled) {
+    border-color: #FFA502;
+    box-shadow: 0 0 15px rgba(255, 165, 2, 0.15);
+}
+
+.restart-btn:hover:not(:disabled) {
+    border-color: var(--p1);
+    box-shadow: 0 0 15px var(--p1-soft);
+}
+
+/* ========================================
+   FOOTER
+   ======================================== */
+.footer {
+    text-align: center;
+}
+
+.footer p {
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    letter-spacing: 0.02em;
+}
+
+/* ========================================
+   TOAST NOTIFICATIONS
+   ======================================== */
+.toast {
+    position: fixed;
+    top: 24px;
+    left: 50%;
+    transform: translateX(-50%) translateY(-20px);
+    background: var(--bg-card);
+    color: var(--text);
+    padding: 12px 28px;
+    border-radius: var(--radius);
+    font-size: 0.88rem;
+    font-weight: 600;
+    opacity: 0;
+    transition: all 0.35s ease;
+    z-index: 100;
+    border: 1px solid var(--accent);
+    box-shadow: 0 4px 25px rgba(0, 0, 0, 0.5);
+    pointer-events: none;
+    white-space: nowrap;
+}
+
+.toast.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+}
+
+/* ========================================
+   GAME OVER MODAL
+   ======================================== */
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(11, 11, 26, 0.88);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 200;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.4s ease;
+    overflow: hidden;
+}
+
+.modal-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal {
+    background: var(--bg-card);
+    border: 1px solid rgba(108, 92, 231, 0.2);
+    border-radius: 22px;
+    padding: 40px 36px;
+    text-align: center;
+    max-width: 380px;
+    width: 90%;
+    transform: scale(0.75) translateY(30px);
+    transition: transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+    z-index: 201;
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5);
+    position: relative;
+}
+
+.modal-overlay.active .modal {
+    transform: scale(1) translateY(0);
+}
+
+.modal-icon {
+    font-size: 3.5rem;
+    margin-bottom: 14px;
+    display: block;
+    animation: bounce-in 0.6s ease 0.3s both;
+}
+
+.modal-title {
+    font-size: 1.6rem;
+    font-weight: 800;
+    margin-bottom: 6px;
+    letter-spacing: 0.02em;
+}
+
+.modal-title.p1 {
+    color: var(--p1);
+    text-shadow: 0 0 20px var(--p1-glow);
+}
+
+.modal-title.p2 {
+    color: var(--p2);
+    text-shadow: 0 0 20px var(--p2-glow);
+}
+
+.modal-title.draw {
+    color: var(--accent);
+    text-shadow: 0 0 20px var(--accent-glow);
+}
+
+.modal-subtitle {
+    font-size: 0.88rem;
+    color: var(--text-dim);
+    margin-bottom: 24px;
+}
+
+.modal-scores {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 24px;
+    margin-bottom: 28px;
+    padding: 18px 20px;
+    background: var(--bg-secondary);
+    border-radius: var(--radius);
+}
+
+.modal-score {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    align-items: center;
+}
+
+.ms-label {
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-dim);
+}
+
+.ms-value {
+    font-size: 2.2rem;
+    font-weight: 800;
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+}
+
+.p1-ms .ms-value {
+    color: var(--p1);
+}
+
+.p2-ms .ms-value {
+    color: var(--p2);
+}
+
+.modal-vs {
+    color: var(--text-muted);
+    font-weight: 700;
+    font-size: 1rem;
+}
+
+.play-again-btn {
+    background: var(--accent) !important;
+    border-color: var(--accent) !important;
+    padding: 14px 36px !important;
+    font-size: 1rem !important;
+    box-shadow: 0 4px 22px var(--accent-glow);
+    width: 100%;
+}
+
+.play-again-btn:hover:not(:disabled) {
+    box-shadow: 0 6px 30px var(--accent-glow) !important;
+    background: #7d6ff0 !important;
+}
+
+/* ========================================
+   CONFETTI
+   ======================================== */
+.confetti-piece {
+    position: absolute;
+    top: -20px;
+    border-radius: 3px;
+    opacity: 0.85;
+    animation: confetti-fall linear forwards;
+    pointer-events: none;
+    z-index: 200;
+}
+
+/* ========================================
+   ANIMATIONS
+   ======================================== */
+@keyframes pulse-dot {
+    0%, 100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(1.35);
+        opacity: 0.7;
+    }
+}
+
+@keyframes timer-pulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.35;
+    }
+}
+
+@keyframes draw-h {
+    from {
+        transform: translateY(-50%) scaleX(0);
+    }
+    to {
+        transform: translateY(-50%) scaleX(1);
+    }
+}
+
+@keyframes draw-v {
+    from {
+        transform: translateX(-50%) scaleY(0);
+    }
+    to {
+        transform: translateX(-50%) scaleY(1);
+    }
+}
+
+@keyframes box-pop {
+    0% {
+        transform: scale(0);
+        opacity: 0;
+    }
+    60% {
+        transform: scale(1.12);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+@keyframes bounce-in {
+    0% {
+        transform: scale(0.2);
+        opacity: 0;
+    }
+    50% {
+        transform: scale(1.2);
+    }
+    70% {
+        transform: scale(0.9);
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+@keyframes shake {
+    0%, 100% {
+        transform: translateX(0);
+    }
+    20% {
+        transform: translateX(-6px);
+    }
+    40% {
+        transform: translateX(6px);
+    }
+    60% {
+        transform: translateX(-4px);
+    }
+    80% {
+        transform: translateX(4px);
+    }
+}
+
+@keyframes confetti-fall {
+    0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 0.9;
+    }
+    100% {
+        transform: translateY(100vh) rotate(720deg);
+        opacity: 0;
+    }
+}
+
+.turn-indicator.timeout-flash {
+    animation: shake 0.5s ease;
+}
+
+/* ========================================
+   RESPONSIVE
+   ======================================== */
+@media (max-width: 480px) {
+    :root {
+        --cell-size: 48px;
+        --dot-size: 14px;
+        --line-thickness: 5px;
+    }
+
+    body {
+        padding: 12px;
+    }
+
+    .game-container {
+        gap: 12px;
+    }
+
+    .logo {
+        font-size: 2.1rem;
+    }
+
+    .tagline {
+        font-size: 0.68rem;
+    }
+
+    .mode-btn {
+        padding: 8px 14px;
+        font-size: 0.78rem;
+    }
+
+    .player-card {
+        padding: 10px 12px;
+        gap: 8px;
+    }
+
+    .player-score {
+        font-size: 1.4rem;
+    }
+
+    .scoreboard {
+        gap: 8px;
+    }
+
+    .board-wrapper {
+        padding: 14px;
+    }
+
+    .btn {
+        padding: 10px 14px;
+        font-size: 0.82rem;
+    }
+
+    .modal {
+        padding: 28px 22px;
+    }
+
+    .modal-title {
+        font-size: 1.3rem;
+    }
+}
+
+@media (max-width: 360px) {
+    :root {
+        --cell-size: 40px;
+        --dot-size: 12px;
+        --line-thickness: 4px;
+    }
+
+    .scoreboard {
+        gap: 6px;
+    }
+
+    .player-card {
+        padding: 8px 10px;
+        gap: 6px;
+    }
+
+    .player-score {
+        font-size: 1.2rem;
+    }
+
+    .vs-badge {
+        font-size: 0.65rem;
+    }
+}
