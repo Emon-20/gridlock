@@ -1,153 +1,493 @@
-/* ========================================
-   GRIDLOCK — Styles
-   Deep color palette: Space, Crimson, Emerald, Purple
-   ======================================== */
+/* ========================================================
+   GRIDLOCK — Sleek Strategic Territory Game
+   Color Palette: Deep Space (#0B0B1A), Crimson Flame (#FF4757),
+   Emerald Glow (#2ED8A3), and Royal Purple (#6C5CE7)
+   ======================================================== */
 
-/* ===== VARIABLES ===== */
+/* ===== DESIGN TOKENS ===== */
 :root {
-    --bg-primary: #0B0B1A;
-    --bg-secondary: #111128;
-    --bg-card: #1A1A38;
-    --bg-card-hover: #222250;
+    --bg-space: #0B0B1A;
+    --bg-surface: #12122B;
+    --bg-card: #181838;
+    --bg-card-hover: #21214B;
+    --bg-glass: rgba(24, 24, 56, 0.75);
 
     --p1: #FF4757;
-    --p1-glow: rgba(255, 71, 87, 0.35);
-    --p1-soft: rgba(255, 71, 87, 0.13);
+    --p1-glow: rgba(255, 71, 87, 0.4);
+    --p1-soft: rgba(255, 71, 87, 0.16);
 
     --p2: #2ED8A3;
-    --p2-glow: rgba(46, 216, 163, 0.35);
-    --p2-soft: rgba(46, 216, 163, 0.13);
+    --p2-glow: rgba(46, 216, 163, 0.4);
+    --p2-soft: rgba(46, 216, 163, 0.16);
 
     --accent: #6C5CE7;
-    --accent-glow: rgba(108, 92, 231, 0.35);
-    --accent-soft: rgba(108, 92, 231, 0.12);
+    --accent-light: #8E7BFF;
+    --accent-glow: rgba(108, 92, 231, 0.45);
+    --accent-soft: rgba(108, 92, 231, 0.15);
 
-    --text: #FFFFFF;
-    --text-dim: #8080A8;
-    --text-muted: #4A4A70;
+    --text-white: #FFFFFF;
+    --text-dim: #9292BA;
+    --text-muted: #56567C;
+    --border-subtle: rgba(108, 92, 231, 0.2);
 
-    --line-idle: rgba(108, 92, 231, 0.18);
+    --line-idle: rgba(108, 92, 231, 0.22);
 
-    --dot-size: 18px;
-    --cell-size: 62px;
-    --line-thickness: 7px;
+    /* Dynamic Grid Sizing defaults (adjusted via JS) */
+    --dot-size: 16px;
+    --cell-size: 58px;
+    --line-thickness: 6px;
 
-    --radius: 14px;
-    --radius-sm: 10px;
-    --transition: 0.25s ease;
-    --font: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+    --radius-lg: 20px;
+    --radius-md: 14px;
+    --radius-sm: 8px;
+    --transition: 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+    --font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
 
 /* ===== RESET ===== */
-*,
-*::before,
-*::after {
+*, *::before, *::after {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-/* ===== BODY ===== */
-body {
+html, body {
+    width: 100%;
+    min-height: 100%;
+    background-color: var(--bg-space);
     font-family: var(--font);
-    background: var(--bg-primary);
-    color: var(--text);
-    min-height: 100vh;
+    color: var(--text-white);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+}
+
+body {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 20px;
+    min-height: 100vh;
+    padding: 16px;
     background-image:
-        radial-gradient(ellipse at 20% 50%, rgba(108, 92, 231, 0.06) 0%, transparent 50%),
-        radial-gradient(ellipse at 80% 20%, rgba(255, 71, 87, 0.04) 0%, transparent 50%),
-        radial-gradient(ellipse at 60% 80%, rgba(46, 216, 163, 0.04) 0%, transparent 50%);
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+        radial-gradient(ellipse at 15% 25%, rgba(108, 92, 231, 0.12) 0%, transparent 45%),
+        radial-gradient(ellipse at 85% 75%, rgba(46, 216, 163, 0.08) 0%, transparent 45%),
+        radial-gradient(ellipse at 50% 10%, rgba(255, 71, 87, 0.08) 0%, transparent 45%);
 }
 
-/* ===== CONTAINER ===== */
-.game-container {
+.app-container {
     width: 100%;
-    max-width: 520px;
+    max-width: 580px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 18px;
 }
 
-/* ========================================
-   HEADER
-   ======================================== */
-.header {
+.hidden {
+    display: none !important;
+}
+
+/* ========================================================
+   MAIN MENU SCREEN
+   ======================================================== */
+.main-menu {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 22px;
+    animation: fadeIn 0.35s ease;
+}
+
+.menu-hero {
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.logo-badge {
+    font-size: 0.68rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.22em;
+    color: var(--accent-light);
+    background: var(--accent-soft);
+    padding: 4px 14px;
+    border-radius: 20px;
+    border: 1px solid rgba(108, 92, 231, 0.3);
+    margin-bottom: 8px;
+    display: inline-block;
 }
 
 .logo {
-    font-size: 2.8rem;
+    font-size: 3rem;
     font-weight: 900;
     letter-spacing: 0.08em;
-    color: var(--text);
-    text-shadow: 0 0 30px var(--accent-glow);
+    color: var(--text-white);
+    text-shadow: 0 0 35px var(--accent-glow);
+    line-height: 1.1;
 }
 
 .logo span {
-    color: var(--accent);
+    color: var(--accent-light);
 }
 
 .tagline {
-    font-size: 0.78rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
     text-transform: uppercase;
-    letter-spacing: 0.25em;
     color: var(--text-dim);
-    margin-top: 4px;
-    font-weight: 600;
+    margin-top: 6px;
 }
 
-/* ========================================
-   MODE SELECTOR
-   ======================================== */
-.mode-selector {
+/* Menu Config Card */
+.menu-config-card {
+    width: 100%;
+    background: var(--bg-surface);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-lg);
+    padding: 24px 20px;
     display: flex;
-    gap: 6px;
-    background: var(--bg-secondary);
-    padding: 5px;
-    border-radius: var(--radius);
-    border: 1px solid rgba(108, 92, 231, 0.12);
+    flex-direction: column;
+    gap: 24px;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.45);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
 }
 
-.mode-btn {
-    padding: 10px 22px;
-    border: none;
-    background: transparent;
-    color: var(--text-dim);
-    font-family: var(--font);
-    font-size: 0.85rem;
-    font-weight: 600;
-    border-radius: var(--radius-sm);
-    cursor: pointer;
-    transition: all var(--transition);
-    white-space: nowrap;
+.menu-group {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
 }
 
-.mode-btn:hover {
-    color: var(--text);
-    background: rgba(108, 92, 231, 0.1);
-}
-
-.mode-btn.active {
-    background: var(--accent);
-    color: var(--text);
-    box-shadow: 0 2px 14px var(--accent-glow);
-}
-
-/* ========================================
-   SCOREBOARD
-   ======================================== */
-.scoreboard {
+.group-header {
     display: flex;
     align-items: center;
-    gap: 14px;
+    gap: 10px;
+}
+
+.group-step {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: var(--accent);
+    color: var(--text-white);
+    font-size: 0.72rem;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.group-title {
+    font-size: 0.92rem;
+    font-weight: 700;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
+
+/* Mode Selection Cards */
+.mode-cards-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+.menu-mode-card {
+    position: relative;
+    background: var(--bg-card);
+    border: 2px solid transparent;
+    border-radius: var(--radius-md);
+    padding: 16px 14px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    cursor: pointer;
+    text-align: left;
+    transition: all var(--transition);
+    overflow: hidden;
+}
+
+.menu-mode-card:hover {
+    background: var(--bg-card-hover);
+    border-color: rgba(108, 92, 231, 0.4);
+    transform: translateY(-2px);
+}
+
+.menu-mode-card.selected {
+    background: var(--bg-card-hover);
+    border-color: var(--accent);
+    box-shadow: 0 0 25px var(--accent-glow);
+}
+
+.mode-icon {
+    font-size: 1.8rem;
+    line-height: 1;
+}
+
+.mode-name {
+    font-size: 0.95rem;
+    font-weight: 800;
+    color: var(--text-white);
+}
+
+.mode-desc {
+    font-size: 0.7rem;
+    color: var(--text-dim);
+    line-height: 1.3;
+    margin-top: 2px;
+}
+
+.mode-chip {
+    font-size: 0.65rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 3px 8px;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.06);
+    color: var(--text-dim);
+    margin-top: auto;
+}
+
+.menu-mode-card.selected .mode-chip {
+    background: var(--accent);
+    color: var(--text-white);
+}
+
+/* Level Selection Cards (5 Levels) */
+.level-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 8px;
+}
+
+.menu-level-card {
+    background: var(--bg-card);
+    border: 2px solid transparent;
+    border-radius: var(--radius-sm);
+    padding: 12px 6px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    cursor: pointer;
+    text-align: center;
+    transition: all var(--transition);
+}
+
+.menu-level-card:hover {
+    background: var(--bg-card-hover);
+    border-color: rgba(108, 92, 231, 0.4);
+    transform: translateY(-2px);
+}
+
+.menu-level-card.selected {
+    background: var(--bg-card-hover);
+    border-color: var(--accent);
+    box-shadow: 0 0 20px var(--accent-glow);
+}
+
+.level-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+}
+
+.level-badge {
+    font-size: 0.72rem;
+    font-weight: 800;
+    color: var(--accent-light);
+}
+
+.level-diff {
+    font-size: 0.58rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    padding: 2px 5px;
+    border-radius: 4px;
+}
+
+.diff-easy { background: rgba(46, 216, 163, 0.2); color: #2ED8A3; }
+.diff-med { background: rgba(255, 165, 2, 0.2); color: #FFA502; }
+.diff-classic { background: rgba(108, 92, 231, 0.25); color: #8E7BFF; }
+.diff-hard { background: rgba(255, 71, 87, 0.2); color: #FF4757; }
+.diff-expert { background: rgba(235, 77, 75, 0.3); color: #FF6B81; }
+
+.level-grid-dim {
+    font-size: 0.85rem;
+    font-weight: 800;
+    color: var(--text-white);
+    margin-top: 4px;
+}
+
+.level-info {
+    font-size: 0.62rem;
+    color: var(--text-dim);
+    line-height: 1.2;
+}
+
+.level-time {
+    font-size: 0.58rem;
+    color: var(--text-muted);
+    margin-top: 4px;
+}
+
+/* Launch Button & Summary */
+.menu-launch-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    padding-top: 6px;
+    border-top: 1px solid rgba(108, 92, 231, 0.15);
+}
+
+.selected-summary {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--text-dim);
+    text-align: center;
+    letter-spacing: 0.02em;
+}
+
+.start-game-btn {
     width: 100%;
+    padding: 16px 24px;
+    font-size: 1.05rem;
+    font-weight: 800;
+    letter-spacing: 0.05em;
+    background: linear-gradient(135deg, var(--accent) 0%, var(--accent-light) 100%);
+    border: none;
+    border-radius: var(--radius-md);
+    color: var(--text-white);
+    cursor: pointer;
+    box-shadow: 0 4px 25px var(--accent-glow);
+    transition: all var(--transition);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.start-game-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 32px var(--accent-glow);
+    filter: brightness(1.1);
+}
+
+.start-game-btn:active {
+    transform: translateY(0);
+}
+
+/* Menu Rules Footer */
+.menu-rules-footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 0 10px;
+}
+
+.rule-item {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    font-weight: 500;
+}
+
+.rule-divider {
+    color: var(--border-subtle);
+}
+
+/* ========================================================
+   ACTIVE GAME ARENA
+   ======================================================== */
+.game-arena {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    animation: fadeIn 0.35s ease;
+}
+
+/* Arena Header */
+.arena-header {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 4px 0;
+}
+
+.header-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-sm);
+    color: var(--text-white);
+    padding: 8px 14px;
+    font-family: var(--font);
+    font-size: 0.85rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all var(--transition);
+}
+
+.header-btn:hover {
+    background: var(--bg-card-hover);
+    border-color: var(--accent);
+    transform: translateY(-1px);
+}
+
+.sound-toggle-btn {
+    font-size: 1.1rem;
+    padding: 6px 12px;
+}
+
+.sound-toggle-btn.muted {
+    opacity: 0.65;
+}
+
+.arena-match-meta {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.match-pill {
+    font-size: 0.72rem;
+    font-weight: 800;
+    padding: 4px 10px;
+    border-radius: 20px;
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    color: var(--accent-light);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.mode-pill {
+    color: var(--text-dim);
+}
+
+/* Scoreboard */
+.scoreboard {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 12px;
 }
 
 .player-card {
@@ -155,176 +495,180 @@ body {
     display: flex;
     align-items: center;
     gap: 12px;
-    padding: 14px 16px;
+    padding: 12px 16px;
     background: var(--bg-card);
-    border-radius: var(--radius);
+    border-radius: var(--radius-md);
     border: 2px solid transparent;
     transition: all var(--transition);
 }
 
-.player-card .player-dot {
+.player-dot {
     width: 12px;
     height: 12px;
     border-radius: 50%;
     flex-shrink: 0;
-    transition: all var(--transition);
 }
 
 .player-1-card .player-dot {
     background: var(--p1);
+    box-shadow: 0 0 10px var(--p1-glow);
 }
 
 .player-2-card .player-dot {
     background: var(--p2);
+    box-shadow: 0 0 10px var(--p2-glow);
 }
 
-/* Active player glow */
 .player-card.active.player-1-card {
     border-color: var(--p1);
-    box-shadow: 0 0 20px var(--p1-glow), inset 0 0 20px var(--p1-soft);
+    box-shadow: 0 0 20px var(--p1-glow), inset 0 0 16px var(--p1-soft);
 }
 
 .player-card.active.player-2-card {
     border-color: var(--p2);
-    box-shadow: 0 0 20px var(--p2-glow), inset 0 0 20px var(--p2-soft);
+    box-shadow: 0 0 20px var(--p2-glow), inset 0 0 16px var(--p2-soft);
 }
 
 .player-card.active .player-dot {
-    animation: pulse-dot 1.5s ease-in-out infinite;
+    animation: pulse-dot 1.4s ease-in-out infinite;
 }
 
 .player-info {
     display: flex;
     flex-direction: column;
-    gap: 2px;
+    flex: 1;
+}
+
+.player-label-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .player-label {
     font-size: 0.72rem;
-    font-weight: 600;
+    font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 0.1em;
+    letter-spacing: 0.08em;
     color: var(--text-dim);
+}
+
+.player-percent {
+    font-size: 0.68rem;
+    font-weight: 700;
+    color: var(--text-muted);
 }
 
 .player-score {
     font-size: 1.8rem;
-    font-weight: 800;
+    font-weight: 900;
     line-height: 1;
+    margin-top: 2px;
     font-variant-numeric: tabular-nums;
 }
 
-.player-1-card .player-score {
-    color: var(--p1);
-}
-
-.player-2-card .player-score {
-    color: var(--p2);
-}
+.player-1-card .player-score { color: var(--p1); }
+.player-2-card .player-score { color: var(--p2); }
 
 .vs-badge {
     font-size: 0.72rem;
-    font-weight: 800;
+    font-weight: 900;
     color: var(--text-muted);
     letter-spacing: 0.1em;
     flex-shrink: 0;
 }
 
-/* ========================================
-   TIMER
-   ======================================== */
+/* Timer */
 .timer-wrapper {
     width: 100%;
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 12px;
 }
 
 .timer-bar {
     flex: 1;
     height: 6px;
     background: var(--bg-card);
-    border-radius: 3px;
+    border-radius: 4px;
     overflow: hidden;
+    border: 1px solid rgba(108, 92, 231, 0.15);
 }
 
 .timer-fill {
     height: 100%;
     width: 100%;
-    border-radius: 3px;
+    border-radius: 4px;
     transition: width 0.1s linear;
 }
 
 .timer-fill.p1 {
     background: var(--p1);
+    box-shadow: 0 0 8px var(--p1-glow);
 }
 
 .timer-fill.p2 {
     background: var(--p2);
+    box-shadow: 0 0 8px var(--p2-glow);
 }
 
 .timer-fill.urgent {
-    animation: timer-pulse 0.5s ease-in-out infinite;
+    animation: timer-pulse 0.45s ease-in-out infinite;
 }
 
 .timer-text {
     font-size: 0.85rem;
-    font-weight: 700;
+    font-weight: 800;
     color: var(--text-dim);
-    min-width: 30px;
+    min-width: 32px;
     text-align: right;
     font-variant-numeric: tabular-nums;
 }
 
-/* ========================================
-   TURN INDICATOR
-   ======================================== */
+/* Turn Indicator Banner */
 .turn-indicator {
     display: flex;
     align-items: center;
     gap: 8px;
-    font-size: 0.9rem;
-    font-weight: 700;
+    font-size: 0.92rem;
+    font-weight: 600;
     color: var(--text-dim);
-    transition: color var(--transition);
     min-height: 24px;
+    transition: color var(--transition);
 }
 
-.turn-indicator.p1 {
-    color: var(--p1);
-}
+.turn-indicator.p1 { color: var(--p1); }
+.turn-indicator.p2 { color: var(--p2); }
 
-.turn-indicator.p2 {
-    color: var(--p2);
-}
-
-.turn-dot {
+.turn-indicator .turn-dot {
     width: 8px;
     height: 8px;
     border-radius: 50%;
     display: inline-block;
-    flex-shrink: 0;
 }
 
-.turn-dot.p1 {
+.turn-indicator.p1 .turn-dot {
     background: var(--p1);
-    box-shadow: 0 0 6px var(--p1-glow);
+    box-shadow: 0 0 8px var(--p1-glow);
 }
 
-.turn-dot.p2 {
+.turn-indicator.p2 .turn-dot {
     background: var(--p2);
-    box-shadow: 0 0 6px var(--p2-glow);
+    box-shadow: 0 0 8px var(--p2-glow);
 }
 
-/* ========================================
-   GAME BOARD
-   ======================================== */
+/* Board Wrapper & Dynamic Responsive Board */
 .board-wrapper {
-    padding: 22px;
-    background: var(--bg-secondary);
-    border-radius: var(--radius);
-    border: 1px solid rgba(108, 92, 231, 0.1);
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background: var(--bg-surface);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border-subtle);
+    box-shadow: 0 8px 36px rgba(0, 0, 0, 0.45);
+    overflow: hidden;
 }
 
 .board {
@@ -332,9 +676,10 @@ body {
     gap: 0;
     user-select: none;
     -webkit-user-select: none;
+    touch-action: manipulation;
 }
 
-/* ===== DOTS ===== */
+/* Dots */
 .dot {
     width: var(--dot-size);
     height: var(--dot-size);
@@ -343,13 +688,17 @@ body {
     z-index: 2;
     box-shadow: 0 0 8px var(--accent-glow);
     position: relative;
+    pointer-events: none;
 }
 
-/* ===== LINES ===== */
+/* Lines & Generous Hit Areas */
 .line {
     position: relative;
     cursor: pointer;
     z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .line::before {
@@ -360,7 +709,7 @@ body {
     transition: all var(--transition);
 }
 
-/* Horizontal lines */
+/* Horizontal Line Track */
 .h-line::before {
     left: -1px;
     right: -1px;
@@ -369,7 +718,7 @@ body {
     height: var(--line-thickness);
 }
 
-/* Vertical lines */
+/* Vertical Line Track */
 .v-line::before {
     top: -1px;
     bottom: -1px;
@@ -378,19 +727,18 @@ body {
     width: var(--line-thickness);
 }
 
-/* Hover effect — player 1 */
+/* Hover effects */
 .board[data-current-player="1"] .line:not(.drawn):hover::before {
-    background: rgba(255, 71, 87, 0.45);
+    background: rgba(255, 71, 87, 0.55);
     box-shadow: 0 0 12px var(--p1-glow);
 }
 
-/* Hover effect — player 2 */
 .board[data-current-player="2"] .line:not(.drawn):hover::before {
-    background: rgba(46, 216, 163, 0.45);
+    background: rgba(46, 216, 163, 0.55);
     box-shadow: 0 0 12px var(--p2-glow);
 }
 
-/* Drawn lines */
+/* Drawn Lines */
 .line.drawn {
     cursor: default;
     pointer-events: none;
@@ -406,16 +754,10 @@ body {
     box-shadow: 0 0 10px var(--p2-glow);
 }
 
-/* Line draw animation */
-.h-line.drawn::before {
-    animation: draw-h 0.2s ease-out;
-}
+.h-line.drawn::before { animation: draw-h 0.2s ease-out; }
+.v-line.drawn::before { animation: draw-v 0.2s ease-out; }
 
-.v-line.drawn::before {
-    animation: draw-v 0.2s ease-out;
-}
-
-/* ===== BOXES ===== */
+/* Boxes */
 .box {
     position: relative;
     border-radius: 4px;
@@ -428,10 +770,12 @@ body {
 
 .box.claimed.p1 {
     background: var(--p1-soft);
+    box-shadow: inset 0 0 12px rgba(255, 71, 87, 0.2);
 }
 
 .box.claimed.p2 {
     background: var(--p2-soft);
+    box-shadow: inset 0 0 12px rgba(46, 216, 163, 0.2);
 }
 
 .box.claimed::after {
@@ -441,23 +785,16 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 0.7rem;
+    font-size: 0.72rem;
     font-weight: 800;
     letter-spacing: 0.05em;
-    opacity: 0.55;
+    opacity: 0.65;
 }
 
-.box.claimed.p1::after {
-    color: var(--p1);
-}
+.box.claimed.p1::after { color: var(--p1); }
+.box.claimed.p2::after { color: var(--p2); }
 
-.box.claimed.p2::after {
-    color: var(--p2);
-}
-
-/* ========================================
-   CONTROLS
-   ======================================== */
+/* Controls */
 .controls {
     display: flex;
     gap: 12px;
@@ -466,10 +803,10 @@ body {
 
 .btn {
     flex: 1;
-    padding: 12px 20px;
-    border: 2px solid rgba(108, 92, 231, 0.18);
+    padding: 12px 18px;
+    border: 1px solid var(--border-subtle);
     background: var(--bg-card);
-    color: var(--text);
+    color: var(--text-white);
     font-family: var(--font);
     font-size: 0.9rem;
     font-weight: 700;
@@ -479,28 +816,27 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 6px;
+    gap: 8px;
 }
 
 .btn:hover:not(:disabled) {
     background: var(--bg-card-hover);
     border-color: var(--accent);
-    box-shadow: 0 0 15px var(--accent-soft);
     transform: translateY(-1px);
 }
 
 .btn:active:not(:disabled) {
-    transform: scale(0.97) translateY(0);
+    transform: translateY(0);
 }
 
 .btn:disabled {
-    opacity: 0.3;
+    opacity: 0.35;
     cursor: not-allowed;
 }
 
 .undo-btn:hover:not(:disabled) {
     border-color: #FFA502;
-    box-shadow: 0 0 15px rgba(255, 165, 2, 0.15);
+    box-shadow: 0 0 15px rgba(255, 165, 2, 0.2);
 }
 
 .restart-btn:hover:not(:disabled) {
@@ -508,63 +844,23 @@ body {
     box-shadow: 0 0 15px var(--p1-soft);
 }
 
-/* ========================================
-   FOOTER
-   ======================================== */
-.footer {
-    text-align: center;
-}
-
-.footer p {
-    font-size: 0.72rem;
-    color: var(--text-muted);
-    letter-spacing: 0.02em;
-}
-
-/* ========================================
-   TOAST NOTIFICATIONS
-   ======================================== */
-.toast {
-    position: fixed;
-    top: 24px;
-    left: 50%;
-    transform: translateX(-50%) translateY(-20px);
-    background: var(--bg-card);
-    color: var(--text);
-    padding: 12px 28px;
-    border-radius: var(--radius);
-    font-size: 0.88rem;
-    font-weight: 600;
-    opacity: 0;
-    transition: all 0.35s ease;
-    z-index: 100;
-    border: 1px solid var(--accent);
-    box-shadow: 0 4px 25px rgba(0, 0, 0, 0.5);
-    pointer-events: none;
-    white-space: nowrap;
-}
-
-.toast.show {
-    opacity: 1;
-    transform: translateX(-50%) translateY(0);
-}
-
-/* ========================================
-   GAME OVER MODAL
-   ======================================== */
+/* ========================================================
+   MODALS (Game Over & Abandon Confirmation)
+   ======================================================== */
 .modal-overlay {
     position: fixed;
     inset: 0;
     background: rgba(11, 11, 26, 0.88);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
     display: flex;
     align-items: center;
     justify-content: center;
     z-index: 200;
     opacity: 0;
     visibility: hidden;
-    transition: all 0.4s ease;
+    transition: all 0.35s ease;
+    padding: 20px;
     overflow: hidden;
 }
 
@@ -574,18 +870,18 @@ body {
 }
 
 .modal {
-    background: var(--bg-card);
-    border: 1px solid rgba(108, 92, 231, 0.2);
-    border-radius: 22px;
-    padding: 40px 36px;
+    background: var(--bg-surface);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-lg);
+    padding: 34px 28px;
     text-align: center;
-    max-width: 380px;
-    width: 90%;
-    transform: scale(0.75) translateY(30px);
-    transition: transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
-    z-index: 201;
-    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5);
+    max-width: 420px;
+    width: 100%;
+    transform: scale(0.8) translateY(20px);
+    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.6);
     position: relative;
+    z-index: 201;
 }
 
 .modal-overlay.active .modal {
@@ -593,17 +889,16 @@ body {
 }
 
 .modal-icon {
-    font-size: 3.5rem;
-    margin-bottom: 14px;
-    display: block;
-    animation: bounce-in 0.6s ease 0.3s both;
+    font-size: 3.4rem;
+    line-height: 1;
+    margin-bottom: 12px;
+    animation: bounce-in 0.6s ease 0.2s both;
 }
 
 .modal-title {
-    font-size: 1.6rem;
-    font-weight: 800;
-    margin-bottom: 6px;
-    letter-spacing: 0.02em;
+    font-size: 1.65rem;
+    font-weight: 900;
+    margin-bottom: 4px;
 }
 
 .modal-title.p1 {
@@ -617,211 +912,282 @@ body {
 }
 
 .modal-title.draw {
-    color: var(--accent);
+    color: var(--accent-light);
     text-shadow: 0 0 20px var(--accent-glow);
 }
 
 .modal-subtitle {
-    font-size: 0.88rem;
+    font-size: 0.85rem;
     color: var(--text-dim);
-    margin-bottom: 24px;
+    margin-bottom: 20px;
 }
 
 .modal-scores {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 24px;
-    margin-bottom: 28px;
-    padding: 18px 20px;
-    background: var(--bg-secondary);
-    border-radius: var(--radius);
+    gap: 20px;
+    margin-bottom: 16px;
+    padding: 16px 20px;
+    background: var(--bg-card);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-subtle);
 }
 
 .modal-score {
     display: flex;
     flex-direction: column;
-    gap: 4px;
     align-items: center;
+    gap: 2px;
 }
 
 .ms-label {
-    font-size: 0.7rem;
-    font-weight: 600;
+    font-size: 0.68rem;
+    font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 0.1em;
+    letter-spacing: 0.08em;
     color: var(--text-dim);
 }
 
 .ms-value {
     font-size: 2.2rem;
-    font-weight: 800;
+    font-weight: 900;
     line-height: 1;
     font-variant-numeric: tabular-nums;
 }
 
-.p1-ms .ms-value {
-    color: var(--p1);
-}
+.p1-ms .ms-value { color: var(--p1); }
+.p2-ms .ms-value { color: var(--p2); }
 
-.p2-ms .ms-value {
-    color: var(--p2);
+.ms-pct {
+    font-size: 0.68rem;
+    color: var(--text-muted);
+    font-weight: 600;
 }
 
 .modal-vs {
+    font-size: 1.2rem;
     color: var(--text-muted);
-    font-weight: 700;
-    font-size: 1rem;
+}
+
+.modal-stats-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    padding: 10px 14px;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: var(--radius-sm);
+    margin-bottom: 22px;
+}
+
+.stat-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+}
+
+.stat-label {
+    font-size: 0.65rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    font-weight: 600;
+}
+
+.stat-val {
+    font-size: 0.9rem;
+    font-weight: 800;
+    color: var(--text-dim);
+}
+
+.stat-divider {
+    width: 1px;
+    height: 24px;
+    background: var(--border-subtle);
+}
+
+.modal-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 
 .play-again-btn {
-    background: var(--accent) !important;
-    border-color: var(--accent) !important;
-    padding: 14px 36px !important;
-    font-size: 1rem !important;
+    background: linear-gradient(135deg, var(--accent) 0%, var(--accent-light) 100%) !important;
+    border: none !important;
     box-shadow: 0 4px 22px var(--accent-glow);
-    width: 100%;
+    padding: 14px 24px !important;
+    font-size: 0.95rem !important;
+    font-weight: 800 !important;
 }
 
-.play-again-btn:hover:not(:disabled) {
-    box-shadow: 0 6px 30px var(--accent-glow) !important;
-    background: #7d6ff0 !important;
+.modal-menu-btn {
+    background: var(--bg-card) !important;
+    border: 1px solid var(--border-subtle) !important;
+    padding: 12px 24px !important;
+    font-size: 0.9rem !important;
 }
 
-/* ========================================
-   CONFETTI
-   ======================================== */
+.modal-menu-btn:hover {
+    background: var(--bg-card-hover) !important;
+    border-color: var(--accent) !important;
+}
+
+/* Confirm Abandon Box */
+.confirm-box {
+    max-width: 360px;
+}
+
+.confirm-icon {
+    font-size: 2.8rem;
+    margin-bottom: 10px;
+}
+
+.confirm-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.btn-danger {
+    background: rgba(255, 71, 87, 0.18) !important;
+    border-color: var(--p1) !important;
+    color: var(--p1) !important;
+}
+
+.btn-danger:hover {
+    background: var(--p1) !important;
+    color: var(--text-white) !important;
+}
+
+.btn-secondary {
+    background: var(--bg-card) !important;
+    color: var(--text-dim) !important;
+}
+
+/* ========================================================
+   TOAST NOTIFICATIONS
+   ======================================================== */
+.toast {
+    position: fixed;
+    top: 24px;
+    left: 50%;
+    transform: translateX(-50%) translateY(-20px);
+    background: var(--bg-card);
+    color: var(--text-white);
+    padding: 12px 24px;
+    border-radius: var(--radius-md);
+    font-size: 0.88rem;
+    font-weight: 700;
+    opacity: 0;
+    transition: all 0.3s ease;
+    z-index: 300;
+    border: 1px solid var(--accent);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6);
+    pointer-events: none;
+    white-space: nowrap;
+}
+
+.toast.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+}
+
+/* ========================================================
+   CONFETTI CELEBRATION
+   ======================================================== */
 .confetti-piece {
     position: absolute;
     top: -20px;
     border-radius: 3px;
-    opacity: 0.85;
+    opacity: 0.9;
     animation: confetti-fall linear forwards;
     pointer-events: none;
-    z-index: 200;
+    z-index: 205;
 }
 
-/* ========================================
-   ANIMATIONS
-   ======================================== */
+/* ========================================================
+   KEYFRAME ANIMATIONS
+   ======================================================== */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
 @keyframes pulse-dot {
-    0%, 100% {
-        transform: scale(1);
-        opacity: 1;
-    }
-    50% {
-        transform: scale(1.35);
-        opacity: 0.7;
-    }
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.35); opacity: 0.7; }
 }
 
 @keyframes timer-pulse {
-    0%, 100% {
-        opacity: 1;
-    }
-    50% {
-        opacity: 0.35;
-    }
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
 }
 
 @keyframes draw-h {
-    from {
-        transform: translateY(-50%) scaleX(0);
-    }
-    to {
-        transform: translateY(-50%) scaleX(1);
-    }
+    from { transform: translateY(-50%) scaleX(0); }
+    to { transform: translateY(-50%) scaleX(1); }
 }
 
 @keyframes draw-v {
-    from {
-        transform: translateX(-50%) scaleY(0);
-    }
-    to {
-        transform: translateX(-50%) scaleY(1);
-    }
+    from { transform: translateX(-50%) scaleY(0); }
+    to { transform: translateX(-50%) scaleY(1); }
 }
 
 @keyframes box-pop {
-    0% {
-        transform: scale(0);
-        opacity: 0;
-    }
-    60% {
-        transform: scale(1.12);
-        opacity: 1;
-    }
-    100% {
-        transform: scale(1);
-    }
+    0% { transform: scale(0); opacity: 0; }
+    60% { transform: scale(1.12); opacity: 1; }
+    100% { transform: scale(1); }
 }
 
 @keyframes bounce-in {
-    0% {
-        transform: scale(0.2);
-        opacity: 0;
-    }
-    50% {
-        transform: scale(1.2);
-    }
-    70% {
-        transform: scale(0.9);
-    }
-    100% {
-        transform: scale(1);
-        opacity: 1;
-    }
+    0% { transform: scale(0.2); opacity: 0; }
+    50% { transform: scale(1.2); }
+    70% { transform: scale(0.9); }
+    100% { transform: scale(1); opacity: 1; }
 }
 
 @keyframes shake {
-    0%, 100% {
-        transform: translateX(0);
-    }
-    20% {
-        transform: translateX(-6px);
-    }
-    40% {
-        transform: translateX(6px);
-    }
-    60% {
-        transform: translateX(-4px);
-    }
-    80% {
-        transform: translateX(4px);
-    }
+    0%, 100% { transform: translateX(0); }
+    20% { transform: translateX(-6px); }
+    40% { transform: translateX(6px); }
+    60% { transform: translateX(-4px); }
+    80% { transform: translateX(4px); }
 }
 
 @keyframes confetti-fall {
-    0% {
-        transform: translateY(0) rotate(0deg);
-        opacity: 0.9;
-    }
-    100% {
-        transform: translateY(100vh) rotate(720deg);
-        opacity: 0;
-    }
+    0% { transform: translateY(0) rotate(0deg); opacity: 0.95; }
+    100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
 }
 
 .turn-indicator.timeout-flash {
     animation: shake 0.5s ease;
 }
 
-/* ========================================
-   RESPONSIVE
-   ======================================== */
+/* ========================================================
+   RESPONSIVE DESIGN (Desktop, Tablet, Mobile)
+   ======================================================== */
+@media (max-width: 600px) {
+    .logo {
+        font-size: 2.4rem;
+    }
+
+    .level-cards-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .level-cards-grid .menu-level-card:nth-child(4),
+    .level-cards-grid .menu-level-card:nth-child(5) {
+        grid-column: span 1;
+    }
+
+    .board-wrapper {
+        padding: 14px;
+    }
+}
+
 @media (max-width: 480px) {
-    :root {
-        --cell-size: 48px;
-        --dot-size: 14px;
-        --line-thickness: 5px;
-    }
-
     body {
-        padding: 12px;
-    }
-
-    .game-container {
-        gap: 12px;
+        padding: 10px;
     }
 
     .logo {
@@ -829,12 +1195,31 @@ body {
     }
 
     .tagline {
-        font-size: 0.68rem;
+        font-size: 0.72rem;
     }
 
-    .mode-btn {
-        padding: 8px 14px;
-        font-size: 0.78rem;
+    .menu-config-card {
+        padding: 18px 14px;
+        gap: 18px;
+    }
+
+    .mode-cards-grid {
+        grid-template-columns: 1fr;
+        gap: 8px;
+    }
+
+    .level-cards-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 6px;
+    }
+
+    .level-cards-grid .menu-level-card:nth-child(4),
+    .level-cards-grid .menu-level-card:nth-child(5) {
+        grid-column: span 1;
+    }
+
+    .scoreboard {
+        gap: 8px;
     }
 
     .player-card {
@@ -846,49 +1231,38 @@ body {
         font-size: 1.4rem;
     }
 
-    .scoreboard {
-        gap: 8px;
-    }
-
-    .board-wrapper {
-        padding: 14px;
-    }
-
-    .btn {
-        padding: 10px 14px;
-        font-size: 0.82rem;
-    }
-
     .modal {
-        padding: 28px 22px;
+        padding: 26px 18px;
     }
 
     .modal-title {
-        font-size: 1.3rem;
+        font-size: 1.35rem;
+    }
+
+    .modal-scores {
+        gap: 14px;
+        padding: 12px 14px;
+    }
+
+    .ms-value {
+        font-size: 1.8rem;
     }
 }
 
 @media (max-width: 360px) {
-    :root {
-        --cell-size: 40px;
-        --dot-size: 12px;
-        --line-thickness: 4px;
+    .level-cards-grid {
+        grid-template-columns: repeat(2, 1fr);
     }
 
-    .scoreboard {
-        gap: 6px;
+    .level-cards-grid .menu-level-card:last-child {
+        grid-column: span 2;
     }
 
-    .player-card {
-        padding: 8px 10px;
-        gap: 6px;
+    .player-label {
+        font-size: 0.65rem;
     }
 
     .player-score {
-        font-size: 1.2rem;
-    }
-
-    .vs-badge {
-        font-size: 0.65rem;
+        font-size: 1.25rem;
     }
 }
