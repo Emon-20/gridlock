@@ -2,98 +2,314 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GridLock — Claim Your Territory</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>GridLock — Strategic Territory Strategy Game</title>
+    <meta name="description" content="GridLock is an immersive, dark-themed strategy game of territory capture. Outmaneuver opponents in PvP or challenge the 3-tier smart AI across 5 progressive grid sizes.">
+    
+    <!-- Inline SVG Favicon -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%230B0B1A'/><circle cx='30' cy='30' r='10' fill='%23FF4757'/><circle cx='70' cy='30' r='10' fill='%236C5CE7'/><circle cx='30' cy='70' r='10' fill='%236C5CE7'/><circle cx='70' cy='70' r='10' fill='%232ED8A3'/><line x1='30' y1='30' x2='70' y2='30' stroke='%23FF4757' stroke-width='6'/><line x1='30' y1='30' x2='30' y2='70' stroke='%236C5CE7' stroke-width='6'/><line x1='70' y1='30' x2='70' y2='70' stroke='%232ED8A3' stroke-width='6'/><rect x='34' y='34' width='32' height='32' rx='6' fill='%23FF4757' fill-opacity='0.25'/></svg>">
+    
+    <!-- Typography -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- Main Style -->
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="game-container">
-        <!-- Header -->
-        <header class="header">
-            <h1 class="logo">GRID<span>LOCK</span></h1>
-            <p class="tagline">Claim Your Territory</p>
-        </header>
+    <div class="app-container">
 
-        <!-- Mode Selector -->
-        <div class="mode-selector">
-            <button class="mode-btn active" data-mode="pvp">👥 vs Player</button>
-            <button class="mode-btn" data-mode="pvc">🤖 vs Computer</button>
-        </div>
+        <!-- ========================================
+             MAIN MENU SCREEN (Initial Launcher)
+             ======================================== -->
+        <section class="main-menu" id="mainMenu" aria-label="Main Menu">
+            <header class="menu-hero">
+                <div class="logo-badge">STRATEGY ARENA</div>
+                <h1 class="logo">GRID<span>LOCK</span></h1>
+                <p class="tagline">Claim Your Territory · Outsmart the Grid</p>
+            </header>
 
-        <!-- Scoreboard -->
-        <div class="scoreboard">
-            <div class="player-card player-1-card active">
-                <div class="player-dot"></div>
-                <div class="player-info">
-                    <span class="player-label">Player 1</span>
-                    <span class="player-score" id="score1">0</span>
+            <div class="menu-config-card">
+                <!-- Section 1: Mode Selection -->
+                <div class="menu-group">
+                    <div class="group-header">
+                        <span class="group-step">1</span>
+                        <h2 class="group-title">Select Battle Mode</h2>
+                    </div>
+                    <div class="mode-cards-grid">
+                        <button type="button" class="menu-mode-card selected" data-mode="pve" id="modePveBtn">
+                            <div class="card-glow"></div>
+                            <div class="mode-icon">🤖</div>
+                            <div class="mode-meta">
+                                <div class="mode-name">Player vs AI</div>
+                                <div class="mode-desc">Smart 3-Tier Tactical Computer</div>
+                            </div>
+                            <span class="mode-chip">Solo Challenge</span>
+                        </button>
+
+                        <button type="button" class="menu-mode-card" data-mode="pvp" id="modePvpBtn">
+                            <div class="card-glow"></div>
+                            <div class="mode-icon">👥</div>
+                            <div class="mode-meta">
+                                <div class="mode-name">Player vs Player</div>
+                                <div class="mode-desc">Pass & Play on Same Device</div>
+                            </div>
+                            <span class="mode-chip">Local Match</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Section 2: Level Selection (5 Progressive Grid Sizes) -->
+                <div class="menu-group">
+                    <div class="group-header">
+                        <span class="group-step">2</span>
+                        <h2 class="group-title">Select Grid Size & Level</h2>
+                    </div>
+                    <div class="level-cards-grid">
+                        <!-- Level 1: 3x3 -->
+                        <button type="button" class="menu-level-card" data-level="1" id="level1Btn">
+                            <div class="level-header">
+                                <span class="level-badge">Lvl 1</span>
+                                <span class="level-diff diff-easy">Fast</span>
+                            </div>
+                            <div class="level-grid-dim">3×3 Dots</div>
+                            <div class="level-info">2×2 Boxes · 4 Total</div>
+                            <div class="level-time">⏱️ ~1 min duel</div>
+                        </button>
+
+                        <!-- Level 2: 4x4 -->
+                        <button type="button" class="menu-level-card" data-level="2" id="level2Btn">
+                            <div class="level-header">
+                                <span class="level-badge">Lvl 2</span>
+                                <span class="level-diff diff-med">Tactical</span>
+                            </div>
+                            <div class="level-grid-dim">4×4 Dots</div>
+                            <div class="level-info">3×3 Boxes · 9 Total</div>
+                            <div class="level-time">⏱️ ~3 min duel</div>
+                        </button>
+
+                        <!-- Level 3: 5x5 (Standard) -->
+                        <button type="button" class="menu-level-card selected" data-level="3" id="level3Btn">
+                            <div class="level-header">
+                                <span class="level-badge">Lvl 3</span>
+                                <span class="level-diff diff-classic">Classic</span>
+                            </div>
+                            <div class="level-grid-dim">5×5 Dots</div>
+                            <div class="level-info">4×4 Boxes · 16 Total</div>
+                            <div class="level-time">⏱️ ~5 min standard</div>
+                        </button>
+
+                        <!-- Level 4: 6x6 -->
+                        <button type="button" class="menu-level-card" data-level="4" id="level4Btn">
+                            <div class="level-header">
+                                <span class="level-badge">Lvl 4</span>
+                                <span class="level-diff diff-hard">Advanced</span>
+                            </div>
+                            <div class="level-grid-dim">6×6 Dots</div>
+                            <div class="level-info">5×5 Boxes · 25 Total</div>
+                            <div class="level-time">⏱️ ~8 min deep play</div>
+                        </button>
+
+                        <!-- Level 5: 7x7 -->
+                        <button type="button" class="menu-level-card" data-level="5" id="level5Btn">
+                            <div class="level-header">
+                                <span class="level-badge">Lvl 5</span>
+                                <span class="level-diff diff-expert">Master</span>
+                            </div>
+                            <div class="level-grid-dim">7×7 Dots</div>
+                            <div class="level-info">6×6 Boxes · 36 Total</div>
+                            <div class="level-time">⏱️ ~12 min arena</div>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Launch Action -->
+                <div class="menu-launch-wrap">
+                    <div class="selected-summary" id="selectedSummaryText">
+                        🤖 Player vs AI • Level 3 (5×5 Dots, 16 Boxes)
+                    </div>
+                    <button type="button" class="btn btn-primary start-game-btn" id="startGameBtn">
+                        <span class="btn-icon">⚔️</span>
+                        <span>Start Game</span>
+                    </button>
                 </div>
             </div>
-            <div class="vs-badge">VS</div>
-            <div class="player-card player-2-card">
-                <div class="player-dot"></div>
-                <div class="player-info">
-                    <span class="player-label" id="p2Label">Player 2</span>
-                    <span class="player-score" id="score2">0</span>
+
+            <!-- Rules Quick Reference -->
+            <footer class="menu-rules-footer">
+                <div class="rule-item">
+                    <span class="rule-icon">✏️</span>
+                    <span>Click adjacent dots to draw lines</span>
                 </div>
+                <div class="rule-divider">·</div>
+                <div class="rule-item">
+                    <span class="rule-icon">📦</span>
+                    <span>Complete 4 sides to claim 1 point</span>
+                </div>
+                <div class="rule-divider">·</div>
+                <div class="rule-item">
+                    <span class="rule-icon">⚡</span>
+                    <span>Claiming earns a bonus turn</span>
+                </div>
+                <div class="rule-divider">·</div>
+                <div class="rule-item">
+                    <span class="rule-icon">⏱️</span>
+                    <span>15s speed timer per move</span>
+                </div>
+            </footer>
+        </section>
+
+        <!-- ========================================
+             ACTIVE GAME ARENA (Mid-Match View)
+             ======================================== -->
+        <main class="game-arena hidden" id="gameArena" aria-label="Game Arena">
+            <!-- Arena Top Navigation Bar -->
+            <header class="arena-header">
+                <button type="button" class="header-btn menu-nav-btn" id="menuBtn" title="Return to Main Menu">
+                    <span class="nav-icon">🏠</span>
+                    <span class="nav-text">Menu</span>
+                </button>
+
+                <div class="arena-match-meta">
+                    <span class="match-pill" id="arenaLevelBadge">Lvl 3: 5×5</span>
+                    <span class="match-pill mode-pill" id="arenaModeBadge">🤖 PvE</span>
+                </div>
+
+                <button type="button" class="header-btn sound-toggle-btn" id="soundBtn" title="Toggle Sound">
+                    🔊
+                </button>
+            </header>
+
+            <!-- Scoreboard -->
+            <section class="scoreboard" aria-label="Scoreboard">
+                <!-- Player 1 Card -->
+                <div class="player-card player-1-card active" id="p1Card">
+                    <div class="player-dot"></div>
+                    <div class="player-info">
+                        <div class="player-label-wrap">
+                            <span class="player-label">Player 1</span>
+                            <span class="player-percent" id="p1Percent">0%</span>
+                        </div>
+                        <span class="player-score" id="score1">0</span>
+                    </div>
+                </div>
+
+                <!-- Center VS & Turn Indicator -->
+                <div class="vs-badge">VS</div>
+
+                <!-- Player 2 / AI Card -->
+                <div class="player-card player-2-card" id="p2Card">
+                    <div class="player-dot"></div>
+                    <div class="player-info">
+                        <div class="player-label-wrap">
+                            <span class="player-label" id="p2Label">Computer</span>
+                            <span class="player-percent" id="p2Percent">0%</span>
+                        </div>
+                        <span class="player-score" id="score2">0</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 15-Second Move Countdown Timer -->
+            <div class="timer-wrapper" aria-label="Move Timer">
+                <div class="timer-bar">
+                    <div class="timer-fill p1" id="timerFill"></div>
+                </div>
+                <span class="timer-text" id="timerText">15s</span>
             </div>
-        </div>
 
-        <!-- Timer -->
-        <div class="timer-wrapper">
-            <div class="timer-bar">
-                <div class="timer-fill" id="timerFill"></div>
+            <!-- Dynamic Turn Status Banner -->
+            <div class="turn-indicator p1" id="turnIndicator">
+                <span class="turn-dot"></span>
+                <span id="turnText">Player 1's Turn</span>
             </div>
-            <span class="timer-text" id="timerText">15s</span>
-        </div>
 
-        <!-- Turn Indicator -->
-        <div class="turn-indicator p1" id="turnIndicator">
-            <span class="turn-dot p1"></span>
-            Player 1's Turn
-        </div>
+            <!-- Board Wrapper & Responsive Grid -->
+            <div class="board-wrapper" id="boardWrapper">
+                <div class="board" id="board" data-current-player="1" role="grid" aria-label="Strategy Grid Board"></div>
+            </div>
 
-        <!-- Game Board -->
-        <div class="board-wrapper">
-            <div class="board" id="board" data-current-player="1"></div>
-        </div>
+            <!-- Match Control Actions -->
+            <div class="controls">
+                <button type="button" class="btn undo-btn" id="undoBtn" disabled title="Undo last turn">
+                    <span>↩</span>
+                    <span>Undo</span>
+                </button>
+                <button type="button" class="btn restart-btn" id="restartBtn" title="Restart current match">
+                    <span>↻</span>
+                    <span>Restart</span>
+                </button>
+            </div>
+        </main>
 
-        <!-- Controls -->
-        <div class="controls">
-            <button class="btn undo-btn" id="undoBtn" disabled>↩ Undo</button>
-            <button class="btn restart-btn" id="restartBtn">↻ Restart</button>
-        </div>
-
-        <!-- Footer -->
-        <footer class="footer">
-            <p>Draw lines between dots · Complete boxes to score · Beat your opponent!</p>
-        </footer>
     </div>
 
-    <!-- Game Over Modal -->
-    <div class="modal-overlay" id="modalOverlay">
+    <!-- ========================================
+         GAME OVER MODAL (Result Celebration)
+         ======================================== -->
+    <div class="modal-overlay" id="modalOverlay" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
         <div class="modal" id="modal">
             <div class="modal-icon" id="modalIcon">🏆</div>
             <h2 class="modal-title" id="modalTitle">Player 1 Wins!</h2>
-            <p class="modal-subtitle" id="modalSubtitle">Dominated the grid!</p>
+            <p class="modal-subtitle" id="modalSubtitle">Dominant strategic victory!</p>
+
             <div class="modal-scores">
                 <div class="modal-score p1-ms">
                     <span class="ms-label">Player 1</span>
                     <span class="ms-value" id="modalScore1">0</span>
+                    <span class="ms-pct" id="modalP1Percent">0%</span>
                 </div>
                 <span class="modal-vs">—</span>
                 <div class="modal-score p2-ms">
-                    <span class="ms-label" id="modalP2Label">Player 2</span>
+                    <span class="ms-label" id="modalP2Label">Computer</span>
                     <span class="ms-value" id="modalScore2">0</span>
+                    <span class="ms-pct" id="modalP2Percent">0%</span>
                 </div>
             </div>
-            <button class="btn play-again-btn" id="playAgainBtn">🔄 Play Again</button>
+
+            <div class="modal-stats-row">
+                <div class="stat-item">
+                    <span class="stat-label">Total Moves</span>
+                    <span class="stat-val" id="modalMoves">0</span>
+                </div>
+                <div class="stat-divider"></div>
+                <div class="stat-item">
+                    <span class="stat-label">Match Time</span>
+                    <span class="stat-val" id="modalTime">0s</span>
+                </div>
+            </div>
+
+            <div class="modal-actions">
+                <button type="button" class="btn btn-primary play-again-btn" id="modalRematchBtn">
+                    🔄 Rematch
+                </button>
+                <button type="button" class="btn modal-menu-btn" id="modalMenuBtn">
+                    🏠 Main Menu
+                </button>
+            </div>
         </div>
     </div>
 
-    <script src="script.js"></script>
+    <!-- ========================================
+         ABANDON MATCH CONFIRMATION MODAL
+         ======================================== -->
+    <div class="modal-overlay" id="confirmModal" role="dialog" aria-modal="true" aria-labelledby="confirmTitle">
+        <div class="modal confirm-box">
+            <div class="confirm-icon">⚠️</div>
+            <h2 class="modal-title" id="confirmTitle">Return to Menu?</h2>
+            <p class="modal-subtitle">Your active match progress will be abandoned.</p>
+            <div class="confirm-actions">
+                <button type="button" class="btn btn-danger" id="confirmYesBtn">Yes, Leave Match</button>
+                <button type="button" class="btn btn-secondary" id="confirmNoBtn">Continue Playing</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modular Game Scripts (Vanilla ES Architecture) -->
+    <script src="js/audio.js"></script>
+    <script src="js/ai.js"></script>
+    <script src="js/game.js"></script>
+    <script src="js/ui.js"></script>
 </body>
 </html>
